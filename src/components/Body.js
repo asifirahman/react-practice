@@ -4,6 +4,8 @@ import Shimmer from "./Shimmer";
 
 const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
+  const [filteredRestList, setFilteredRestList] = useState([])
+  const [searchText, setSearchText] = useState("");
 
   useEffect(async () => {
     const data = await fetch(
@@ -16,6 +18,9 @@ const Body = () => {
     setRestaurantList(
       json.data.cards[2].card.card.gridElements.infoWithStyle.restaurants
     );
+    setFilteredRestList(
+      json.data.cards[2].card.card.gridElements.infoWithStyle.restaurants
+    );
   }, []);
 
   const setTopRate = () => {
@@ -26,15 +31,30 @@ const Body = () => {
     setRestaurantList(filteredList);
   };
 
+  const handleChange = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    const filteredResult = restaurantList.filter((restaurant) =>
+      restaurant.info.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredRestList(filteredResult);
+  };
+
   return restaurantList.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input type="text" value={searchText} onChange={handleChange} />
+          <button onClick={handleSubmit}>Search</button>
+        </div>
         <button onClick={setTopRate}>Top Rated Restaurant</button>
       </div>
       <div className="res-container">
-        {restaurantList.map((restaurant) => (
+        {filteredRestList.map((restaurant) => (
           <RestaurantCard
             name={restaurant?.info?.name}
             cloudinaryID={restaurant?.info?.cloudinaryImageId}
