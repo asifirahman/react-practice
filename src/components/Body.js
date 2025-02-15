@@ -3,6 +3,7 @@ import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { FETCH_RESTAURANT } from "../utils/constants";
+import useOnlineStatus from "../utils/hooks/useOnlineStatus";
 
 const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
@@ -16,7 +17,6 @@ const Body = () => {
   const fetchData = async () => {
     const data = await fetch(FETCH_RESTAURANT);
     const json = await data.json();
-    console.log(json)
     setRestaurantList(
       json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants
     );
@@ -42,6 +42,13 @@ const Body = () => {
     );
     setFilteredRestList(filteredResult);
   };
+
+  //If you move this section up, then React will not call all the hooks 
+  //and throw an error. https://dev.to/collegewap/fix-rendered-fewer-hooks-than-expected-in-react-3757 
+  const onlineStatus = useOnlineStatus();
+  if (!onlineStatus) {
+    return <h1>Please check your internet connection!!!</h1>;
+  }
 
   return restaurantList.length === 0 ? (
     <Shimmer />

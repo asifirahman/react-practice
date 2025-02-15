@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/hooks/useOnlineStatus";
 
 const Header = () => {
   return (
@@ -12,6 +13,12 @@ const Header = () => {
       <div className="nav-items">
         <ul>
           <li>
+            <button
+              style={{ backgroundColor: useOnlineStatus() ? "green" : "red" }}
+            ></button>
+            Online Status
+          </li>
+          <li>
             <Link className="link" to="/">
               Home
             </Link>
@@ -23,7 +30,7 @@ const Header = () => {
           </li>
           <li>
             <Link className="link" to="/contact">
-              Contact  Us
+              Contact Us
             </Link>
           </li>
           <li>Cart</li>
