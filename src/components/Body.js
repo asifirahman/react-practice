@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import { FETCH_RESTAURANT } from "../utils/constants";
 
 const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
@@ -13,28 +14,22 @@ const Body = () => {
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.5359604&lng=88.3714217&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
+    const data = await fetch(FETCH_RESTAURANT);
     const json = await data.json();
-    console.log(json);
-    console.log(
-      json.data.cards[5].card.card.gridElements.infoWithStyle.restaurants
-    );
+    console.log(json)
     setRestaurantList(
-      json.data.cards[5].card.card.gridElements.infoWithStyle.restaurants
+      json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants
     );
     setFilteredRestList(
-      json.data.cards[5].card.card.gridElements.infoWithStyle.restaurants
+      json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants
     );
   };
 
   const setTopRate = () => {
-    console.log("HJKHDkshfjkdhkjfhdhfhjkdf");
     const filteredList = restaurantList.filter(
       (restaurant) => restaurant?.info?.avgRating > 4.2
     );
-    setRestaurantList(filteredList);
+    setFilteredRestList(filteredList);
   };
 
   const handleChange = (e) => {
@@ -61,7 +56,11 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredRestList.map((restaurant) => (
-          <Link to={'/restaurant/'+restaurant?.info?.id}>
+          <Link
+            className="link"
+            key={restaurant?.info?.id}
+            to={"/restaurant/" + restaurant?.info?.id}
+          >
             <RestaurantCard
               name={restaurant?.info?.name}
               cloudinaryID={restaurant?.info?.cloudinaryImageId}

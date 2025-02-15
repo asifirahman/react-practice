@@ -1,6 +1,7 @@
 .header {
     display: flex;
     justify-content: space-between;
+    margin-left: 35px;
 }
 
 .logo {
@@ -25,19 +26,21 @@
     display: flex;
     flex-wrap: wrap;
     overflow-x: none;
+    margin-top: 20px;
 }
 
 .res-card {
+    height: 450px;
     width: 200px;
-    margin: 10px;
+    margin: 0px 50px;
     padding: 5px;
-    border: 1px solid black;
     overflow-wrap: break-word;
 }
 
 .res-card-img {
-    width: 200px;
-    height: 200px
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
 }
 
 .shimmer-container {
@@ -54,8 +57,14 @@
 
 .filter {
     display: flex;
+    margin-left: 45px;
 }
 
 .search {
     margin: 0 10px;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
 }
