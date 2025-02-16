@@ -14,7 +14,12 @@ const Header = () => {
         <ul>
           <li>
             <button
-              style={{ backgroundColor: useOnlineStatus() ? "green" : "red" }}
+              style={{
+                backgroundColor: useOnlineStatus() ? "green" : "red",
+                height: "15px",
+                borderRadius: "15px",
+                marginRight: "5px",
+              }}
             ></button>
             Online Status
           </li>
@@ -31,6 +36,11 @@ const Header = () => {
           <li>
             <Link className="link" to="/contact">
               Contact Us
+            </Link>
+          </li>
+          <li>
+            <Link className="link" to="/grocery">
+              Grocery
             </Link>
           </li>
           <li>Cart</li>
