@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { FETCH_RESTAURANT } from "../utils/constants";
@@ -9,6 +9,7 @@ const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
   const [filteredRestList, setFilteredRestList] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
   useEffect(() => {
     fetchData();
@@ -43,8 +44,8 @@ const Body = () => {
     setFilteredRestList(filteredResult);
   };
 
-  //If you move this section up, then React will not call all the hooks 
-  //and throw an error. https://dev.to/collegewap/fix-rendered-fewer-hooks-than-expected-in-react-3757 
+  //If you move this section up, then React will not call all the hooks
+  //and throw an error. https://dev.to/collegewap/fix-rendered-fewer-hooks-than-expected-in-react-3757
   const onlineStatus = useOnlineStatus();
   if (!onlineStatus) {
     return <h1>Please check your internet connection!!!</h1>;
@@ -68,13 +69,11 @@ const Body = () => {
             key={restaurant?.info?.id}
             to={"/restaurant/" + restaurant?.info?.id}
           >
-            <RestaurantCard
-              name={restaurant?.info?.name}
-              cloudinaryID={restaurant?.info?.cloudinaryImageId}
-              avgRating={restaurant?.info?.avgRating}
-              costForTwo={restaurant?.info?.costForTwo}
-              cuisines={restaurant?.info?.cuisines}
-            />
+            {restaurant?.info?.promoted ? (
+              <RestaurantCardPromoted resData={restaurant?.info} />
+            ) : (
+              <RestaurantCard resData={restaurant?.info} />
+            )}
           </Link>
         ))}
       </div>
