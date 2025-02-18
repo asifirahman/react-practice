@@ -1,7 +1,13 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/hooks/useOnlineStatus";
+import UserContext from "../utils/contextAPI/UserContext";
 
 const Header = () => {
+  //Needs to be destructured since useContext(UserContext)
+  //will return an object
+  const { loggedInUser } = useContext(UserContext);
+
   return (
     <div className="header">
       <div className="logo-container">
@@ -43,6 +49,7 @@ const Header = () => {
               Grocery
             </Link>
           </li>
+          <li>{loggedInUser}</li>
           <li>Cart</li>
         </ul>
       </div>

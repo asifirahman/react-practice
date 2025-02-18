@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { FETCH_RESTAURANT } from "../utils/constants";
 import useOnlineStatus from "../utils/hooks/useOnlineStatus";
+import UserContext from "../utils/contextAPI/UserContext";
 
 const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
   const [filteredRestList, setFilteredRestList] = useState([]);
   const [searchText, setSearchText] = useState("");
   const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
+  const { loggedInUser, setUserName } = useContext(UserContext);
 
   useEffect(() => {
     fetchData();
@@ -44,6 +46,10 @@ const Body = () => {
     setFilteredRestList(filteredResult);
   };
 
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value);
+  };
+
   //If you move this section up, then React will not call all the hooks
   //and throw an error. https://dev.to/collegewap/fix-rendered-fewer-hooks-than-expected-in-react-3757
   const onlineStatus = useOnlineStatus();
@@ -61,6 +67,13 @@ const Body = () => {
           <button onClick={handleSubmit}>Search</button>
         </div>
         <button onClick={setTopRate}>Top Rated Restaurant</button>
+        <div className="set-username">
+          <input
+            type="text"
+            value={loggedInUser}
+            onChange={handleUserNameChange}
+          />
+        </div>
       </div>
       <div className="res-container">
         {filteredRestList.map((restaurant) => (
