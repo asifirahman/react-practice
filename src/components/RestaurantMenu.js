@@ -25,14 +25,15 @@ const RestaurantMenu = () => {
     );
 
   return (
-    <div>
+    <div className="res-menu">
       <h1>{name}</h1>
-      {menu?.map((item) => (
+      {/* {menu?.map((item) => (
         <h4 key={item?.card?.info?.id}>
           {item?.card?.info?.name} - Rs.{" "}
           {(item?.card?.info?.price || item?.card?.info?.defaultPrice) / 100}
         </h4>
-      ))}
+      ))} */}
+      <hr className="line-break"/>
       {categories?.map((category, index) => (
         <RestaurantCategory
           key={category?.card?.card?.categoryId}
