@@ -2,11 +2,14 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/hooks/useOnlineStatus";
 import UserContext from "../utils/contextAPI/UserContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   //Needs to be destructured since useContext(UserContext)
   //will return an object
   const { loggedInUser } = useContext(UserContext);
+
+  const cartItems = useSelector((store) => store.cart.items);
 
   return (
     <div className="header">
@@ -50,7 +53,11 @@ const Header = () => {
             </Link>
           </li>
           <li>{loggedInUser}</li>
-          <li>Cart</li>
+          <li style={{ fontWeight: "bold" }}>
+            <Link className="link" to="/cart">
+              Cart - {cartItems.length} items
+            </Link>
+          </li>
         </ul>
       </div>
     </div>

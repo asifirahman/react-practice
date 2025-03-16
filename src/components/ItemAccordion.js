@@ -1,7 +1,15 @@
 import React from "react";
 import { CDN_URL } from "../utils/constants";
+import { addItem } from "../utils/store/cartSlice";
+import { useDispatch } from "react-redux";
 
 const ItemAccordion = ({ items }) => {
+  //dispatching an action
+  const dispatch = useDispatch();
+  const handleAddItem = (item) => {
+    dispatch(addItem(item));
+  };
+
   return (
     <ul>
       {items.map((item) => (
@@ -18,7 +26,12 @@ const ItemAccordion = ({ items }) => {
               className="item-acc-img"
               src={CDN_URL + item?.card?.info?.imageId}
             />
-            <button className="item-acc-button">ADD</button>
+            <button
+              onClick={() => handleAddItem(item)}
+              className="item-acc-button"
+            >
+              ADD
+            </button>
           </div>
         </li>
       ))}
